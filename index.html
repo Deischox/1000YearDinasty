@@ -1,117 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap" rel="stylesheet">
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+ <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
 </head>
-<h1>Hello World</h1>
-<canvas id="canvas" width="960" height="540"></canvas>
-<button onclick="generateQuote()">Get Quote</button>
-<button onclick="saveImage()">Save Image</button>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Portfolio</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron" style="margin-bottom: 0;">
+  <div class="container text-center">
+    <canvas style="margin-top: 3%;" id="canvas" width="960" height="540"></canvas>
+  </div>
+  <div class="container text-center">
+    <button type="button" class="btn btn-primary" onclick="saveImage()">Save Image </button>
+    <button type="button" class="btn btn-primary" onclick="generateQuote()">New Quote</button>
+  </div>
+  
+</div>
+  
+<footer class="container-fluid text-center">
+  <p>Footer Text</p>
+</footer>
+
+
 <script>
 
 
-    function saveImage()
-    {
-        var circle_canvas = document.getElementById("canvas");
-        localStorage.setItem("imgCanvas",circle_canvas.toDataURL());
-    }
+  function saveImage()
+  {
+      var circle_canvas = document.getElementById("canvas");
+      var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
 
 
-    function addTextToImage(imagePath, text) {
-    var circle_canvas = document.getElementById("canvas");
-    var context = circle_canvas.getContext("2d");
-    context.font = "28px Arial";
+      window.location.href=image; // it will save locally
+  }
 
-    // Draw Image function
-    var img = new Image();
-    img.src = imagePath;
 
-    
-    
-    img.onload = function () {
-        context.drawImage(img, 0, 0,960,540);
-        context.lineWidth = 1;
-        context.fillStyle = "#ffff";
-        context.lineStyle = "#ffff";
-        
-        if(text.length > 30)
-        {
-            arr = text.split(' ')
-            i = 0
-            while(arr.length > 0)
-            {
+  function addTextToImage(imagePath, text) {
+  var circle_canvas = document.getElementById("canvas");
+  var context = circle_canvas.getContext("2d");
+  context.font = "28px Arial";
 
-                let s = ""
-                while(s.length < 30 && arr.length > 0)
-                    {
-                        s += arr[0] + " "
-                        arr.shift()
-                        
-                    }
-                console.log(arr,s)
-                
-                context.fillText(s, 30, 80+28*i);
-                i+=1
-            }
-            context.fillText('-Atrioc (1000 year Dinasty)', 30, 80+28*i);
-                
-            
-        }
-        
-        
-        
-    };
+  // Draw Image function
+  var img = new Image();
+  img.src = imagePath;
+
+  
+  
+  img.onload = function () {
+      context.drawImage(img, 0, 0,960,540);
+      context.lineWidth = 1;
+      context.fillStyle = "#ffff";
+      context.lineStyle = "#ffff";
+      
+      if(text.length > 30)
+      {
+          arr = text.split(' ')
+          i = 0
+          while(arr.length > 0)
+          {
+
+              let s = ""
+              while(s.length < 30 && arr.length > 0)
+                  {
+                      s += arr[0] + " "
+                      arr.shift()
+                      
+                  }
+              console.log(arr,s)
+              
+              context.fillText(s, 30, 80+28*i);
+              i+=1
+          }
+          context.fillText('-Atrioc (1000 year Dinasty)', 30, 80+28*i);
+              
+          
+      }
+      
+      
+      
+  };
 }
 
 
 
 const obj = 
 [
-  "The general who wins the battle makes many calculations in his temple before the battle is fought. The general who loses makes but few calculations beforehand.",
-  "A leader leads by example not by force.",
-  "The control of a large force is the same principle as the control of a few men: it is merely a question of dividing up their numbers.",
-  "The ultimate in disposing one's troops is to be without ascertainable shape. Then the most penetrating spies cannot pry in nor can the wise lay plans against you.",
-  "If words of command are not clear and distinct, if orders are not thoroughly understood, the general is to blame. But if his orders ARE clear, and the soldiers nevertheless disobey, then it is the fault of their officers.",
-  "Strategy without tactics is the slowest route to victory. Tactics without strategy is the noise before defeat.",
-  "All warfare is based on deception.",
-  "If fighting is sure to result in victory, then you must fight.",
-  "One defends when his strength is inadaquate, he attacks when it is abundant.",
-  "The quality of decision is like the well-timed swoop of a falcon which enables it to strike and destroy its victim.",
-  "When the enemy is at ease, be able to weary him; when well fed, to starve him; when at rest, to make him move. Appear at places to which he must hasten; move swiftly where he does not expect you.",
-  "If you know your enemy and you know yourself you need not fear the results of a hundred battles. If you know yourself but not the enemy for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself you will succumb in every battle.",
-  "The general who advances without coveting fame and retreats without fearing disgrace, whose only thought is to protect his country and do good service for his sovereign, is the jewel of the kingdom.",
-  "For to win one hundred victories in one hundred battles is not the acme of skill. To subdue the enemy without fighting is the acme of skill.",
-  "What the ancients called a clever fighter is one who not only wins, but excels in winning with ease.",
-  "To a surrounded enemy, you must leave a way of escape.",
-  "To know your Enemy, you must become your Enemy.",
-  "Thus, what is of supreme importance in war is to attack the enemy's strategy.",
-  "A leader leads by example, not force.",
-  "Too frequent rewards indicate that the general is at the end of his resources; too frequent punishments that he is in acute distress.",
-  "Pretend inferiority and encourage his arrogance.",
-  "All men can see these tactics whereby I conquer, but what none can see is the strategy out of which victory is evolved.",
-  "If we do not wish to fight, we can prevent the enemy from engaging us even though the lines of our encampment be merely traced out on the ground. All we need to do is to throw something odd and unaccountable in his way.",
-  "A military operation involves deception. Even though you are competent, appear to be incompetent. Though effective, appear to be ineffective.",
-  "Victorious warriors win first and then go to war, while defeated warriors go to war first and then seek to win.",
-  "The best victory is when the opponent surrenders of its own accord before there are any actual hostilities... It is best to win without fighting.",
-  "Opportunities multiply as they are seized.",
-  "Speed is the essence of war. Take advantage of the enemy's unpreparedness; travel by unexpected routes and strike him where he has taken no precautions.",
-  "If your opponent is of choleric temperament, seek to irritate him.",
-  "Management of many is the same as management of few. It is a matter of organization.",
-  "The good fighters of old first put themselves beyond the possibility of defeat, and then waited for an opportunity of defeating the enemy.",
-  "Build your opponent a golden bridge to retreat across.",
-  "Swift as the wind. Quiet as the forest. Conquer like the fire. Steady as the mountain.",
-  "It is essential to seek out enemy agents who have come to conduct espionage against you and to bribe them to serve you. Give them instructions and care for them. Thus doubled agents are recruited and used.",
-  "Now the reason the enlightened prince and the wise general conquer the enemy whenever they move and their achievements surpass those of ordinary men is foreknowledge.",
-  "And therefore those skilled in war bring the enemy to the field of battle and are not brought there by him.",
-  "There is no instance of a nation benefitting from prolonged warfare.",
-  "When able to attack, we must seem unable; when using our forces, we must seem inactive; when we are near, we must make the enemy believe we are far away; when far away, we must make him believe we are near.",
-  "When torrential water tosses boulders, it is because of its momentum. When the strike of a hawk breaks the body of its prey, it is because of timing.",
-  "Secret operations are essential in war; upon them the army relies to make its every move.",
-  "It is said that if you know your enemies and know yourself, you will not be imperilled in a hundred battles; if you do not know your enemies but do know yourself, you will win one and lose one; if you do not know your enemies nor yourself, you will be imperilled in every single battle.",
-  "He who knows when he can fight and when he cannot will be victorious.",
-  "Subtle and insubstantial, the expert leaves no trace; divinely mysterious, he is inaudible. Thus he is master of his enemy's fate.",
-  "A skilled commander seeks victory from the situation and does not demand it of his subordinates."
+"The general who wins the battle makes many calculations in his temple before the battle is fought. The general who loses makes but few calculations beforehand.",
+"A leader leads by example not by force.",
+"The control of a large force is the same principle as the control of a few men: it is merely a question of dividing up their numbers.",
+"The ultimate in disposing one's troops is to be without ascertainable shape. Then the most penetrating spies cannot pry in nor can the wise lay plans against you.",
+"If words of command are not clear and distinct, if orders are not thoroughly understood, the general is to blame. But if his orders ARE clear, and the soldiers nevertheless disobey, then it is the fault of their officers.",
+"Strategy without tactics is the slowest route to victory. Tactics without strategy is the noise before defeat.",
+"All warfare is based on deception.",
+"If fighting is sure to result in victory, then you must fight.",
+"One defends when his strength is inadaquate, he attacks when it is abundant.",
+"The quality of decision is like the well-timed swoop of a falcon which enables it to strike and destroy its victim.",
+"When the enemy is at ease, be able to weary him; when well fed, to starve him; when at rest, to make him move. Appear at places to which he must hasten; move swiftly where he does not expect you.",
+"If you know your enemy and you know yourself you need not fear the results of a hundred battles. If you know yourself but not the enemy for every victory gained you will also suffer a defeat. If you know neither the enemy nor yourself you will succumb in every battle.",
+"The general who advances without coveting fame and retreats without fearing disgrace, whose only thought is to protect his country and do good service for his sovereign, is the jewel of the kingdom.",
+"For to win one hundred victories in one hundred battles is not the acme of skill. To subdue the enemy without fighting is the acme of skill.",
+"What the ancients called a clever fighter is one who not only wins, but excels in winning with ease.",
+"To a surrounded enemy, you must leave a way of escape.",
+"To know your Enemy, you must become your Enemy.",
+"Thus, what is of supreme importance in war is to attack the enemy's strategy.",
+"A leader leads by example, not force.",
+"Too frequent rewards indicate that the general is at the end of his resources; too frequent punishments that he is in acute distress.",
+"Pretend inferiority and encourage his arrogance.",
+"All men can see these tactics whereby I conquer, but what none can see is the strategy out of which victory is evolved.",
+"If we do not wish to fight, we can prevent the enemy from engaging us even though the lines of our encampment be merely traced out on the ground. All we need to do is to throw something odd and unaccountable in his way.",
+"A military operation involves deception. Even though you are competent, appear to be incompetent. Though effective, appear to be ineffective.",
+"Victorious warriors win first and then go to war, while defeated warriors go to war first and then seek to win.",
+"The best victory is when the opponent surrenders of its own accord before there are any actual hostilities... It is best to win without fighting.",
+"Opportunities multiply as they are seized.",
+"Speed is the essence of war. Take advantage of the enemy's unpreparedness; travel by unexpected routes and strike him where he has taken no precautions.",
+"If your opponent is of choleric temperament, seek to irritate him.",
+"Management of many is the same as management of few. It is a matter of organization.",
+"The good fighters of old first put themselves beyond the possibility of defeat, and then waited for an opportunity of defeating the enemy.",
+"Build your opponent a golden bridge to retreat across.",
+"Swift as the wind. Quiet as the forest. Conquer like the fire. Steady as the mountain.",
+"It is essential to seek out enemy agents who have come to conduct espionage against you and to bribe them to serve you. Give them instructions and care for them. Thus doubled agents are recruited and used.",
+"Now the reason the enlightened prince and the wise general conquer the enemy whenever they move and their achievements surpass those of ordinary men is foreknowledge.",
+"And therefore those skilled in war bring the enemy to the field of battle and are not brought there by him.",
+"There is no instance of a nation benefitting from prolonged warfare.",
+"When able to attack, we must seem unable; when using our forces, we must seem inactive; when we are near, we must make the enemy believe we are far away; when far away, we must make him believe we are near.",
+"When torrential water tosses boulders, it is because of its momentum. When the strike of a hawk breaks the body of its prey, it is because of timing.",
+"Secret operations are essential in war; upon them the army relies to make its every move.",
+"It is said that if you know your enemies and know yourself, you will not be imperilled in a hundred battles; if you do not know your enemies but do know yourself, you will win one and lose one; if you do not know your enemies nor yourself, you will be imperilled in every single battle.",
+"He who knows when he can fight and when he cannot will be victorious.",
+"Subtle and insubstantial, the expert leaves no trace; divinely mysterious, he is inaudible. Thus he is master of his enemy's fate.",
+"A skilled commander seeks victory from the situation and does not demand it of his subordinates."
 ];
 
 function generateQuote(){
@@ -120,4 +179,11 @@ addTextToImage("https://i.imgur.com/FDin4gj.jpg", obj[r]);
 }
 
 
+window.onload = generateQuote();
+
 </script>
+
+
+
+</body>
+</html>

@@ -7,7 +7,18 @@
 <h1>Hello World</h1>
 <canvas id="canvas" width="960" height="540"></canvas>
 <button onclick="generateQuote()">Get Quote</button>
+<button onclick="saveImage()">Save Image</button>
 <script>
+
+
+    function saveImage()
+    {
+        var circle_canvas = document.getElementById("canvas");
+        circle_canvas.crossOrigin = "anonymous";
+        localStorage.setItem("imgCanvas",circle_canvas.toDataURL());
+    }
+
+
     function addTextToImage(imagePath, text) {
     var circle_canvas = document.getElementById("canvas");
     var context = circle_canvas.getContext("2d");
@@ -27,10 +38,25 @@
         
         if(text.length > 30)
         {
-            for(let i = 0; i < text.length/30; i++)
+            arr = text.split(' ')
+            i = 0
+            while(arr.length > 0)
             {
-                context.fillText(text.substring(30*i,30*(i+1)), 30, 80+28*i);
+
+                let s = ""
+                while(s.length < 30 && arr.length > 0)
+                    {
+                        s += arr[0] + " "
+                        arr.shift()
+                        
+                    }
+                console.log(arr,s)
+                
+                context.fillText(s, 30, 80+28*i);
+                i+=1
             }
+            context.fillText('-Atrioc (1000 year Dinasty)', 30, 80+28*i);
+                
             
         }
         

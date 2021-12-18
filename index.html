@@ -14,7 +14,6 @@
     function saveImage()
     {
         var circle_canvas = document.getElementById("canvas");
-        circle_canvas.crossOrigin = "anonymous";
         localStorage.setItem("imgCanvas",circle_canvas.toDataURL());
     }
 

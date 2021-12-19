@@ -184,8 +184,11 @@ const obj =
 ];
 
 function generateQuote(){
+im = ["https://i.imgur.com/FDin4gj.jpg",'https://i.imgur.com/4vJxZbV.jpeg','https://i.imgur.com/HYxktCJ.jpeg','https://i.imgur.com/p4IjiZO.jpg']
 r = Math.floor(Math.random() * obj.length)
-addTextToImage("https://i.imgur.com/FDin4gj.jpg", obj[r]);
+imr = Math.floor(Math.random() * im.length)
+console.log(imr)
+addTextToImage(im[imr], obj[r]);
 }
 
 function resize(){

@@ -31,12 +31,16 @@
     }
 
     .jumbotron{
-        padding-top: 7%;
-        padding-bottom: 7%;
+        height: 87vh;
     }
 
     .navbar-brand{
       color: antiquewhite;
+    }
+
+    canvas{
+        width: 100%;
+        height: 100%;
     }
 
     .navbar-brand:hover{
@@ -44,7 +48,7 @@
     }
   </style>
 </head>
-<body>
+<body style="height: 100vh;">
 
 <nav class="navbar navbar-dark">
   <div class="container-fluid">
@@ -62,7 +66,7 @@
 
 <div class="jumbotron dark" style="margin-bottom: 0;">
   <div class="container text-center">
-    <canvas  id="canvas" width="960" height="540"></canvas>
+    <canvas id="canvas" width="960" height="540"></canvas>
   </div>
   <div class="container text-center">
     <button type="button" class="btn btn-primary" onclick="generateQuote()">New Quote</button>
@@ -94,11 +98,10 @@
   var img = new Image();
   img.src = imagePath;
   img.setAttribute('crossorigin', 'anonymous'); // works for me
-  console.log(img.src)
   
   
   img.onload = function () {
-      context.drawImage(img, 0, 0,960,540);
+      context.drawImage(img, 0, 0, 960, 540);
       context.lineWidth = 1;
       context.fillStyle = "#ffff";
       context.lineStyle = "#ffff";
@@ -185,6 +188,13 @@ r = Math.floor(Math.random() * obj.length)
 addTextToImage("https://i.imgur.com/FDin4gj.jpg", obj[r]);
 }
 
+function resize(){
+
+var canvas = document.getElementById('canvas');
+var heightRatio = 0.5625;
+canvas.height = canvas.width * heightRatio;
+generateQuote()
+}
 
 window.onload = generateQuote();
 
